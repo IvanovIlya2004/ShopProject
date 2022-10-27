@@ -38,22 +38,21 @@ public class Main {
                 charge.cost + " $" + ", количество : " + shelfThree.available + " шт");
 
         //Buyer and Seller
-        Buyer buyer = new Buyer("Покупатель");
+        SellerBuyer sellerBuyer = new SellerBuyer("Покупатель", "Продавец");
 
         // -----------------
         String want = charge.name;
         // -----------------
 
-        Seller seller = new Seller("Продавец");
 
         System.out.println("");
 
         //Selling
-        System.out.println(buyer.name + " : ");
+        System.out.println(sellerBuyer.buyerName + " : ");
         System.out.println("Хочу приобрести ноутбук " + want);
         System.out.println("");
 
-        System.out.println(seller.name + " : ");
+        System.out.println(sellerBuyer.sellerName + " : ");
         if (want == laptop.name) {
             if (shelfOne.available > 0) {
                 System.out.println("Конечно, с вас " + laptop.cost + "$");
