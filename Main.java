@@ -1,21 +1,21 @@
 public class Main {
     public static void main(String[] args) {
         // Storage
-        Storage laptop = new Storage("apple", 101, 2999, 5);
+        Storage laptop = new Storage("ноутбук apple", 101, 2999, 5);
 
-        Storage phone = new Storage("samsung", 102, 999, 0);
+        Storage phone = new Storage("телефон samsung", 102, 999, 0);
 
-        Storage charge = new Storage("X15", 103, 199, 10);
+        Storage charge = new Storage("зарядное устройство X15", 103, 199, 10);
 
         System.out.println("-- На складе : ");
 
-        System.out.println("Позиция 1 : " + "ноутбук " + laptop.name + ", " + "стоимость " +
+        System.out.println("Позиция 1 : "+ laptop.name + ", " + "стоимость " +
                 laptop.cost + " $" + ", " + "количество : " + laptop.sum + " шт");
 
-        System.out.println("Позиция 2 : " + "смартфон " + phone.name + ", " + "стоимость " +
+        System.out.println("Позиция 2 : " + phone.name + ", " + "стоимость " +
                 phone.cost + " $" + ", " + "количество : " + phone.sum + " шт");
 
-        System.out.println("Позиция 3 : " + "зарядное устройство " + charge.name + ", " + "стоимость " +
+        System.out.println("Позиция 3 : " + charge.name + ", " + "стоимость " +
                 charge.cost + " $" + ", " + "количество : " + charge.sum + " шт");
 
         // Shop
@@ -28,17 +28,18 @@ public class Main {
         System.out.println("");
         System.out.println("-- В магазине : ");
 
-        System.out.println("Позиция 1 : " + "ноутбук " + laptop.name + ", " + "стоимость " +
+        System.out.println("Позиция 1 : " + laptop.name + ", " + "стоимость " +
                 laptop.cost + " $" + ", количество : " + shelfOne.available + " шт");
 
-        System.out.println("Позиция 2 : " + "смартфон " + phone.name + ", " + "стоимость " +
+        System.out.println("Позиция 2 : " + phone.name + ", " + "стоимость " +
                 phone.cost + " $" + ", количество : " + shelfTwo.available + " шт");
 
-        System.out.println("Позиция 3 : " + "зарядное устройство " + charge.name + ", " + "стоимость " +
+        System.out.println("Позиция 3 : " + charge.name + ", " + "стоимость " +
                 charge.cost + " $" + ", количество : " + shelfThree.available + " шт");
 
         //Buyer and Seller
         SellerBuyer sellerBuyer = new SellerBuyer("Покупатель", "Продавец");
+
 
         // -----------------
         String want = charge.name;
@@ -49,40 +50,48 @@ public class Main {
 
         //Selling
         System.out.println(sellerBuyer.buyerName + " : ");
-        System.out.println("Хочу приобрести ноутбук " + want);
+        System.out.println("Хочу приобрести " + want);
         System.out.println("");
 
         System.out.println(sellerBuyer.sellerName + " : ");
-        if (want == laptop.name) {
-            if (shelfOne.available > 0) {
+
+        if ((want == laptop.name) || (want == phone.name) || (want == charge.name)) {
+            if ((want == laptop.name) && (shelfOne.available > 0)) {
                 System.out.println("Конечно, с вас " + laptop.cost + "$");
+                sellerBuyer.endFirstBuyer();
+                sellerBuyer.endFirstSeller();
             }
-            else if (laptop.sum > 0) {
-                System.out.println("Необходимо подаждать доставку со склада, хотите забронировать?");
-            }
-            else System.out.println("К сожалению товара на складе нет");
-
-        }
-        else if (want == phone.name) {
-            if (shelfTwo.available > 0) {
+            else if ((want == phone.name) && (shelfTwo.available > 0)) {
                 System.out.println("Конечно, с вас " + phone.cost + "$");
+                sellerBuyer.endFirstBuyer();
+                sellerBuyer.endFirstSeller();
             }
-            else if (phone.sum > 0) {
-                System.out.println("Необходимо подаждать доставку со склада, хотите забронировать?");
-            }
-            else System.out.println("К сожалению товара на складе нет");
-        }
-        else if (want == charge.name) {
-            if (shelfThree.available > 0) {
+            else if ((want == charge.name) && (shelfThree.available > 0)) {
                 System.out.println("Конечно, с вас " + charge.cost + "$");
+                sellerBuyer.endFirstBuyer();
+                sellerBuyer.endFirstSeller();
             }
-            else if (charge.sum > 0) {
+            else if ((want == laptop.name) && (laptop.sum > 0)) {
                 System.out.println("Необходимо подаждать доставку со склада, хотите забронировать?");
+                sellerBuyer.endSecondBuyer();
+                sellerBuyer.endSecondSeller();
             }
-            else System.out.println("К сожалению товара на складе нет");
+            else if ((want == phone.name) && (phone.sum > 0)) {
+                System.out.println("Необходимо подаждать доставку со склада, хотите забронировать?");
+                sellerBuyer.endSecondBuyer();
+                sellerBuyer.endSecondSeller();
+            }
+            else if ((want == charge.name) && (charge.sum > 0)) {
+                System.out.println("Необходимо подаждать доставку со склада, хотите забронировать?");
+                sellerBuyer.endSecondBuyer();
+                sellerBuyer.endSecondSeller();
+            }
+            else {
+                System.out.println("К сожалению товара на складе нет");
+                sellerBuyer.endThirdBuyer();
+            }
         }
 
 
-
+        }
     }
-}
